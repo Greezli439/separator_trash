@@ -4,6 +4,8 @@ import shutil
 from sys import argv
 
 
+# python3 sort.py '/home/mykhailo/Стільниця/dir_hlam' for test
+PATH = argv[1]
 list_type_r = set()
 list_type_files = dict(zip(['images', 'video', 'archives', 'documents', 'audio'],
                            [set(), set(), set(), set(), set()]))
@@ -37,15 +39,16 @@ def arrange_dir(dir):
             for dir_in, type_f in dict_arrange.items():
                 if file_name.split('.')[-1].upper() not in all_known_type:
                     all_unknown_type.add(file_name.split('.')[-1])
-                if file_name.split('.')[-1].upper() in type_f:
-                    list_type_files[dir_in].add(str(file_name))
-                    if file_name.split('.')[-1].upper() in dict_arrange['archives']:
-                        unzip(q, p / dir_in / file_name.split('.')[0])
-                        break
-                    else:
-                        shutil.move(str(dir) + '/' + file_name,
-                                    str(dir) + '/' + dir_in)
-                        break
+                if file_name.split('.')[-1].upper() not in type_f:
+                    continue
+                list_type_files[dir_in].add(str(file_name))
+                if file_name.split('.')[-1].upper() in dict_arrange['archives']:
+                    unzip(q, p / dir_in / file_name.split('.')[0])
+                    break
+                else:
+                    shutil.move(str(dir) + '/' + file_name,
+                                str(PATH) + '/' + dir_in)
+                    break
     check_name(dir)
     del_empy_dir(dir)
 
@@ -98,9 +101,7 @@ def del_empy_dir(dir):
 
 
 if __name__ == '__main__':
-    arrange_dir(argv[1])
-    # arrange_dir('/home/mykhailo/Стільниця/dir_hlam')
-    # python3 sort.py '/home/mykhailo/Стільниця/dir_hlam' for test
+    arrange_dir(PATH)
     string_return = ''
     string_return += 'Список файлів в кожній категорії ' \
                      '(музика, відео, фото и ін.)\n\n'
