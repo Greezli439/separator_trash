@@ -2,7 +2,7 @@ from setuptools import setup, find_namespace_packages
  
 setup(
       name = 'clean_folder_test_28.01.23',
-      version = '1.0.7',
+      version = '1.0.8',
       description = 'Trash separator from path',
       url = 'https://github.com/Greezli439/separator_trash',
       author = 'Mykhailo',
