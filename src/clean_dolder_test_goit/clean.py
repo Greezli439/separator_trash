@@ -4,7 +4,7 @@ import shutil
 from sys import argv
 
 
-# python3 sort.py '/home/mykhailo/Стільниця/dir_hlam' for test
+# python3 clean.py '/home/mykhailo/Стільниця/dir_hlam' for test
 PATH = argv[1]
 list_type_r = set()
 list_type_files = dict(zip(['images', 'video', 'archives', 'documents', 'audio'],
@@ -25,7 +25,7 @@ all_known_type = ['JPEG', 'PNG', 'JPG', 'SVG', 'AVI', 'MP4', 'MOV', 'MKV',
                  'PPTX', 'MP3', 'OGG', 'WAV', 'AMR']
 all_unknown_type = set()
 
-def arrange_dir(dir):
+def arrange_dir(dir=PATH):
     val = listdir(dir)
     p = Path(dir)
     for i in dict_arrange:
