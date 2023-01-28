@@ -25,6 +25,7 @@ all_known_type = ['JPEG', 'PNG', 'JPG', 'SVG', 'AVI', 'MP4', 'MOV', 'MKV',
                  'PPTX', 'MP3', 'OGG', 'WAV', 'AMR']
 all_unknown_type = set()
 
+
 def arrange_dir(dir=PATH):
     val = listdir(dir)
     p = Path(dir)
