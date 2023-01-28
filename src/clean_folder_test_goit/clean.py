@@ -52,6 +52,7 @@ def arrange_dir(dir=PATH):
                     break
     check_name(dir)
     del_empy_dir(dir)
+    print_report()
 
 
 def unzip(file, dir):
@@ -101,8 +102,7 @@ def del_empy_dir(dir):
                 pass
 
 
-if __name__ == '__main__':
-    arrange_dir(PATH)
+def print_report():
     string_return = ''
     string_return += 'Список файлів в кожній категорії ' \
                      '(музика, відео, фото и ін.)\n\n'
@@ -113,3 +113,7 @@ if __name__ == '__main__':
     string_return += f'\nПерелік всіх розширень, які скрипту невідомі:' \
                      f' {all_unknown_type}'
     print(string_return)
+
+if __name__ == '__main__':
+    arrange_dir(PATH)
+
