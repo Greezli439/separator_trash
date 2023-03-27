@@ -4,11 +4,13 @@ import shutil
 from sys import argv
 
 
-# python3 clean.py '/home/mykhailo/Стільниця/dir_hlam' for test
-PATH = argv[1]
+# python3 clean.py '/Users/mykhailo/studies/go_it/my_little_assistant' for test
+
+# PATH = argv[1]
+PATH = '/Users/mykhailo/Desktop/arrange_dir'
 list_type_r = set()
-list_type_files = dict(zip(['images', 'video', 'archives', 'documents', 'audio'],
-                           [set(), set(), set(), set(), set()]))
+list_type_files = dict(zip(['images', 'video', 'archives', 'documents', 'audio', 'unknown'],
+                           [set(), set(), set(), set(), set(), set()]))
 dict_arrange = dict(zip(['images', 'video', 'archives', 'documents', 'audio'],
                             [('JPEG', 'PNG', 'JPG', 'SVG'),
                              ('AVI', 'MP4', 'MOV', 'MKV'), ('ZIP', 'GZ', 'TAR'),
@@ -27,8 +29,8 @@ all_unknown_type = set()
 
 
 def arrange_dir(dir=PATH):
-    val = listdir(dir)
     p = Path(dir)
+    val = listdir(p)
     for i in dict_arrange:
         (p / i).mkdir()
     for file_name in val:
@@ -45,14 +47,13 @@ def arrange_dir(dir=PATH):
                 list_type_files[dir_in].add(str(file_name))
                 if file_name.split('.')[-1].upper() in dict_arrange['archives']:
                     unzip(q, p / dir_in / file_name.split('.')[0])
+                    arrange_dir(p / dir_in / file_name.split('.')[0])
                     break
                 else:
                     shutil.move(str(dir) + '/' + file_name,
                                 str(PATH) + '/' + dir_in)
                     break
-    check_name(dir)
     del_empy_dir(dir)
-    print_report()
 
 
 def unzip(file, dir):
@@ -84,7 +85,7 @@ def normalize(file_name: str):
     for i in file_name:
         if 96 < ord(i) < 123 or 64 < ord(i) < 91 or i.isdigit() or i == '.':
             res += i
-        elif 1039 < ord(i) < 1104:
+        elif 1039 < ord(i) < 1111:
             res += translate(i)
         else:
             res += '_'
@@ -116,4 +117,7 @@ def print_report():
 
 if __name__ == '__main__':
     arrange_dir(PATH)
+    check_name(PATH)
+    del_empy_dir(PATH)
+    print_report()
 
